@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Types of users</h1>
+            <h2>Normal</h2>
+            <p>Can only comment on Image Assets</p>
+            <h2>Project Manager</h2>
+            <p>Can modify ImageAssets</p>
+            <p>Can export and create reports</p>
+            <h2>Admin</h2>
+            <p>Can directly access SQL</p>
+            <p>Can make new fields</p>
+            <p>Can add new users</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Image Assets</h1>
+            <p>Image assets are the main piece of data in this app.</p>
+            <ul>
+                <li>Have a high-resolution ground-truth image</li>
+                <li>Can have thumbnails</li>
+                <li>Can have other attachments</li>
+                <li>Have many fields
+                    <ul>
+                        <li>Project</li>
+                        <li>Location</li>
+                        <li>ID</li>
+                        <li>Author</li>
+                        <li>etc.</li>
+                    </ul>
+                </li>
+                <li>Have tags</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Reporting</h1>
+            <p>There should be a ways to view:</p>
+            <ul>
+              <li>By Project</li>
+              <li>By ID</li>
+              <li>By License</li>
+              <li>By other stuff</li>
+            </ul>
+            <p>There should be search features for searching by:</p>
+            <li>ID</li>
+            <li>Location</li>
+            <li>Tags</li>
+            <li>Project</li>
+            
+        </div>
+    </div>
+</div>

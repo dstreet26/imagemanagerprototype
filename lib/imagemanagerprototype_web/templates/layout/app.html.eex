@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SI Image Manager Prototype</title>
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="row">
+          <div class="col-md-6">
+              <h1>SI Image Manager Prototype</h1>
+          </div>
+          <div class="col-md-6"></div>
+          <nav role="navigation">
+              <ul class="nav nav-pills pull-right">
+                  <li><a href="docs">Docs</a></li>
+                  <li><a href="imageassets">ImageAssets</a></li>
+                  <li><a href="login">Login</a></li>
+              </ul>
+          </nav>
+      </div>
+      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+      <main role="main">
+        <%= render @view_module, @view_template, assigns %>
+      </main>
+
+    </div> <!-- /container -->
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  </body>
+</html>
