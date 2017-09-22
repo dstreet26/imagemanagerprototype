@@ -6,6 +6,8 @@ defmodule Imagemanagerprototype.Accounts.Credential do
 
   schema "credentials" do
     field :email, :string
+    field :crypted_password, :string
+    field :password, :string, virtual: true
     belongs_to :user, User
 
     timestamps()
@@ -14,8 +16,15 @@ defmodule Imagemanagerprototype.Accounts.Credential do
   @doc false
   def changeset(%Credential{} = credential, attrs) do
     credential
-    |> cast(attrs, [:email])
-    |> validate_required([:email])
+    |> cast(attrs, [:email, :password])
+    |> validate_required([:email, :password])
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 5)
+    |> put_change(:crypted_password, hashed_password(attrs["password"]))
+  end
+
+  defp hashed_password(password) do
+    Comeonin.Pbkdf2.hashpwsalt(password)
   end
 end

@@ -73,6 +73,10 @@ defmodule Imagemanagerprototype.Accounts do
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
     |> Repo.insert()
   end
+  
+  
+
+  
 
   @doc """
   Updates a user.
