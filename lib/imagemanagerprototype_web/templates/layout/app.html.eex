@@ -22,7 +22,7 @@
               <ul class="nav nav-pills pull-right">
                   <li><a href="docs">Docs</a></li>
                   <li><a href="imageassets">ImageAssets</a></li>
-                  <li><a href="/session/new">Login</a></li>
+                  <li><a href="/sessions/new">Login</a></li>
               </ul>
           </nav>
       </div>

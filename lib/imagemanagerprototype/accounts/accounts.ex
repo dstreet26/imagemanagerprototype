@@ -8,7 +8,7 @@ defmodule Imagemanagerprototype.Accounts do
 
   alias Imagemanagerprototype.Accounts.{User, Credential}
 
-  def authenticate_by_email_password(email, _password) do
+  def authenticate_by_email_password(email, password) do
     query =
       from u in User,
         inner_join: c in assoc(u, :credential),
@@ -16,7 +16,13 @@ defmodule Imagemanagerprototype.Accounts do
 
     case Repo.one(query) do
       %User{} = user ->
-        {:ok, user}
+        fulluser = get_user!(user.id)
+        case Comeonin.Pbkdf2.checkpw(password, fulluser.credential.crypted_password) do
+          true -> {:ok, user}
+          _ -> {:error, :unauthorized}
+            
+        end
+        
       nil ->
         {:error, :unauthorized}
     end
