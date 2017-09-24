@@ -6,7 +6,23 @@ defmodule Imagemanagerprototype.Accounts do
   import Ecto.Query, warn: false
   alias Imagemanagerprototype.Repo
 
-  alias Imagemanagerprototype.Accounts.{User, Credential}
+  alias Imagemanagerprototype.Accounts.{User, Credential,UserType}
+
+  def valid_user_actions do
+    ["can_make_thumbnails",
+      "can_add_users",
+      "can_delete_users",
+      "can_add_new_fields",
+      "can_modify_fields",
+      "can_comment"
+      ]
+  end
+
+
+  def valid_user_actions_checkbox_list do
+    valid_user_actions() 
+    |> Enum.map(fn x -> %{action: x, isChecked: false} end)
+  end
 
   def authenticate_by_email_password(email, password) do
     query =
@@ -39,7 +55,10 @@ defmodule Imagemanagerprototype.Accounts do
   """
   def list_users do
     # Repo.all(User)
-    User |> Repo.all() |> Repo.preload(:credential)
+    User 
+    |> Repo.all() 
+    |> Repo.preload(:credential) 
+    |> Repo.preload(:user_type)
   end
 
   @doc """
@@ -58,7 +77,10 @@ defmodule Imagemanagerprototype.Accounts do
   """
   # def get_user!(id), do: Repo.get!(User, id)
   def get_user!(id) do
-    User |> Repo.get!(id) |> Repo.preload(:credential)
+    User 
+    |> Repo.get!(id) 
+    |> Repo.preload(:credential)
+    |> Repo.preload(:user_type)
   end
 
   @doc """
@@ -73,10 +95,11 @@ defmodule Imagemanagerprototype.Accounts do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_user(attrs \\ %{}) do
+  def create_user(attrs \\ %{}, user_type_id) do
     %User{}
     |> User.changeset(attrs)
     |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+    |> Ecto.Changeset.put_change(:user_type_id, user_type_id)
     |> Repo.insert()
   end
   
@@ -226,5 +249,108 @@ defmodule Imagemanagerprototype.Accounts do
   """
   def change_credential(%Credential{} = credential) do
     Credential.changeset(credential, %{})
+  end
+
+  # alias Imagemanagerprototype.Accounts.UserType
+
+  @doc """
+  Returns the list of user_types.
+
+  ## Examples
+
+      iex> list_user_types()
+      [%UserType{}, ...]
+
+  """
+  def list_user_types do
+    Repo.all(UserType)
+  end
+
+  def list_user_types_just_type do
+    UserType
+    |> Repo.all()
+    |> Enum.map(fn x -> x.type end)
+
+  end
+
+  @doc """
+  Gets a single user_type.
+
+  Raises `Ecto.NoResultsError` if the User type does not exist.
+
+  ## Examples
+
+      iex> get_user_type!(123)
+      %UserType{}
+
+      iex> get_user_type!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_type!(id), do: Repo.get!(UserType, id)
+
+  @doc """
+  Creates a user_type.
+
+  ## Examples
+
+      iex> create_user_type(%{field: value})
+      {:ok, %UserType{}}
+
+      iex> create_user_type(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_user_type(attrs \\ %{}) do
+    %UserType{}
+    |> UserType.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a user_type.
+
+  ## Examples
+
+      iex> update_user_type(user_type, %{field: new_value})
+      {:ok, %UserType{}}
+
+      iex> update_user_type(user_type, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_user_type(%UserType{} = user_type, attrs) do
+    user_type
+    |> UserType.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a UserType.
+
+  ## Examples
+
+      iex> delete_user_type(user_type)
+      {:ok, %UserType{}}
+
+      iex> delete_user_type(user_type)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_user_type(%UserType{} = user_type) do
+    Repo.delete(user_type)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking user_type changes.
+
+  ## Examples
+
+      iex> change_user_type(user_type)
+      %Ecto.Changeset{source: %UserType{}}
+
+  """
+  def change_user_type(%UserType{} = user_type) do
+    UserType.changeset(user_type, %{})
   end
 end

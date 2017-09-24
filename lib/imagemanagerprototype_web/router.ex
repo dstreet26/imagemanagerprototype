@@ -20,7 +20,7 @@ defmodule ImagemanagerprototypeWeb.Router do
     get "/docs", PageController, :docs
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
-
+    resources "/user_types", UserTypeController
   end
 
   scope "/cms", ImagemanagerprototypeWeb.CMS, as: :cms do

@@ -28,12 +28,18 @@
  <div class="form-group">
    <%= inputs_for f, :credential, fn cf -> %>
      <%= label cf, :password, class: "control-label" %>
-     <%= text_input cf, :password, class: "form-control" %>
+     <%= password_input cf, :password, class: "form-control" %>
      <%= error_tag cf, :password %>
    <% end %>
  </div>
 
-
+<div class="form-group">
+   <%= inputs_for f, :user_type, fn utf -> %>
+     <%= label utf, :type, class: "control-label" %>
+   <%= select f, :type, @user_types|> Enum.map(&{&1.type, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :type %>
+   <% end %>
+ </div>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

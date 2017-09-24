@@ -5,6 +5,8 @@
     <tr>
       <th>Name</th>
       <th>Username</th>
+      <th>Email</th>
+      <th>Type</th>
 
       <th></th>
     </tr>
@@ -14,7 +16,15 @@
     <tr>
       <td><%= user.name %></td>
       <td><%= user.username %></td>
+      <td><%= user.credential.email %></td>
+      <td>
 
+      <%= case user.user_type do
+           nil -> "NULL"
+           a -> a.type
+        end
+         %>
+</td>
       <td class="text-right">
         <span><%= link "Show", to: user_path(@conn, :show, user), class: "btn btn-default btn-xs" %></span>
         <span><%= link "Edit", to: user_path(@conn, :edit, user), class: "btn btn-default btn-xs" %></span>

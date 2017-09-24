@@ -1,0 +1,23 @@
+<h2>Show User type</h2>
+
+<ul>
+
+  <li>
+    <strong>Type:</strong>
+    <%= @user_type.type %>
+  </li>
+
+  <li><strong>Actions:</strong>
+    <ul>
+    <%= for action <- @user_type.actions do %>
+      <li><%= "#{action}"  %></li>
+    <%= end %>
+    </ul>
+  </li>
+
+  
+
+</ul>
+
+<span><%= link "Edit", to: user_type_path(@conn, :edit, @user_type) %></span>
+<span><%= link "Back", to: user_type_path(@conn, :index) %></span>
