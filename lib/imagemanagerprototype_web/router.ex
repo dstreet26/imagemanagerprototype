@@ -21,6 +21,10 @@ defmodule ImagemanagerprototypeWeb.Router do
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
     resources "/user_types", UserTypeController
+    # resources "/licenses", LicenseController
+     # resources "/projects", ProjectController
+      # resources "/imageassets", ImageAssetController
+       # resources "/comments", CommentController
   end
 
   scope "/cms", ImagemanagerprototypeWeb.CMS, as: :cms do
