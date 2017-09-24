@@ -16,7 +16,7 @@ defmodule ImagemanagerprototypeWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-
+  user_types = Accounts.list_user_types()
   {user_type_id, _ } = user_params["type"] |> Integer.parse
 
     case Accounts.create_user(user_params, user_type_id) do
@@ -25,7 +25,7 @@ defmodule ImagemanagerprototypeWeb.UserController do
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: user_path(conn, :show, user))
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, user_types: user_types)
     end
   end
 
