@@ -1,0 +1,26 @@
+<h2>Listing Locations</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for location <- @locations do %>
+    <tr>
+      <td><%= location.name %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: image_assets_location_path(@conn, :show, location), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: image_assets_location_path(@conn, :edit, location), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: image_assets_location_path(@conn, :delete, location), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Location", to: image_assets_location_path(@conn, :new) %></span>

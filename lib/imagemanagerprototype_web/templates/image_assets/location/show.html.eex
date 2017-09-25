@@ -1,0 +1,13 @@
+<h2>Show Location</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @location.name %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: image_assets_location_path(@conn, :edit, @location) %></span>
+<span><%= link "Back", to: image_assets_location_path(@conn, :index) %></span>

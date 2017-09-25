@@ -20,7 +20,7 @@ defmodule Imagemanagerprototype.Mixfile do
   def application do
     [
       mod: {Imagemanagerprototype.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :arc_ecto]
     ]
   end
 
@@ -42,6 +42,8 @@ defmodule Imagemanagerprototype.Mixfile do
       {:gettext, "~> 0.11"},
       {:comeonin, "~> 4.0"},
       {:pbkdf2_elixir, "~> 0.12"},
+      {:arc, "~> 0.8.0"},
+      {:arc_ecto, "~> 0.7.0"},
       {:cowboy, "~> 1.0"}
     ]
   end

@@ -27,10 +27,16 @@ defmodule ImagemanagerprototypeWeb.Router do
        # resources "/comments", CommentController
   end
 
-  scope "/cms", ImagemanagerprototypeWeb.CMS, as: :cms do
+
+ scope "/image_assets", ImagemanagerprototypeWeb.ImageAssets, as: :image_assets do
+      # pipe_through :browser
     pipe_through [:browser, :authenticate_user]
-    resources "/pages", PageController
-  end
+      resources "/projects", ProjectController
+      resources "/licenses", LicenseController
+       resources "/imageassets", ImageAssetController
+        resources "/authors", AuthorController
+        resources "/locations", LocationController
+    end
 
   defp authenticate_user(conn, _) do
     case get_session(conn, :user_id) do

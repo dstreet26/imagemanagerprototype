@@ -1,0 +1,18 @@
+<h2>Show License</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @license.name %>
+  </li>
+
+  <li>
+    <strong>Content:</strong>
+    <%= @license.content %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: image_assets_license_path(@conn, :edit, @license) %></span>
+<span><%= link "Back", to: image_assets_license_path(@conn, :index) %></span>

@@ -1,0 +1,38 @@
+<h2>Show Image asset</h2>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @image_asset.name %>
+  </li>
+
+  <li>
+    <strong>Imageid:</strong>
+    <%= @image_asset.imageid %>
+  </li>
+
+  <li>
+    <strong>Notes:</strong>
+    <%= @image_asset.notes %>
+  </li>
+
+  <li>
+    <strong>Caption:</strong>
+    <%= @image_asset.caption %>
+  </li>
+
+  <li>
+    <strong>Filename:</strong>
+    <%= @image_asset.filename.file_name %>
+  </li>
+
+
+
+</ul>
+
+<img src="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}, :thumb) %>" alt="">
+
+
+<span><%= link "Edit", to: image_assets_image_asset_path(@conn, :edit, @image_asset) %></span>
+<span><%= link "Back", to: image_assets_image_asset_path(@conn, :index) %></span>

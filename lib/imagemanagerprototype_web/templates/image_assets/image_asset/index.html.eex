@@ -1,0 +1,40 @@
+<h2>Listing Image assets</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Imageid</th>
+      <th>Notes</th>
+      <th>Caption</th>
+      <th>Filename</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for image_asset <- @image_assets do %>
+    <tr>
+      <td><%= image_asset.name %></td>
+      <td><%= image_asset.imageid %></td>
+      <td><%= image_asset.notes %></td>
+      <td><%= image_asset.caption %></td>
+      <td><%= 
+case image_asset.filename do
+  nil -> ""
+  _ -> image_asset.filename.file_name
+    
+end
+       %></td>
+
+      <td class="text-right">
+        <span><%= link "Show", to: image_assets_image_asset_path(@conn, :show, image_asset), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Edit", to: image_assets_image_asset_path(@conn, :edit, image_asset), class: "btn btn-default btn-xs" %></span>
+        <span><%= link "Delete", to: image_assets_image_asset_path(@conn, :delete, image_asset), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Image asset", to: image_assets_image_asset_path(@conn, :new) %></span>
