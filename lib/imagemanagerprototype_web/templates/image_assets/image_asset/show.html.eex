@@ -27,7 +27,10 @@
 
   <li>
     <strong>Filename:</strong>
-    <%= @image_asset.filename.file_name %>
+    <%= case @image_asset.filename do
+      nil -> ""
+        _ -> @image_asset.filename.file_name
+    end %>
   </li>
 
 
@@ -36,7 +39,13 @@
 
 <img src="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}, :thumb) %>" alt="">
 <br>
+<%= if @can_view_high_res do %>
 <a href="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}) %>">Download high-res version</a>
+<% else %>
+  
+<% end %>
+<%# only show if allowed %>
+
 <br>
 
 

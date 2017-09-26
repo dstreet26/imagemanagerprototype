@@ -24,6 +24,7 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   end
 
   def create(conn, %{"image_asset" => image_asset_params}) do
+
     case ImageAssets.create_image_asset(image_asset_params) do
       {:ok, image_asset} ->
         conn
@@ -41,6 +42,18 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
 
     image_asset = ImageAssets.get_image_asset!(id)
 
+IO.puts "-------------ACTIONS--------"
+IO.inspect conn.assigns.current_user.user_type.actions
+# ["can_add_new_fields", "can_add_users", "can_comment", "can_delete_users",
+ # "can_make_thumbnails", "can_modify_fields", "can_view_high_res_image"]
+
+ can_view_high_res = Enum.any?(
+  conn.assigns.current_user.user_type.actions,
+  fn (action) -> 
+    action == "can_view_high_res_image"
+  end
+  )
+
 
     {image_asset_id_integer, _ } = id |> Integer.parse
     image_asset_comments = ImageAssets.get_image_asset_comments!(image_asset_id_integer)
@@ -49,6 +62,7 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
       image_asset: image_asset, 
       comment_changeset: comment_changeset, 
       current_user_id: current_user_id,
+      can_view_high_res: can_view_high_res,
       image_asset_comments: image_asset_comments)
   end
 

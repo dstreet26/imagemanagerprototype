@@ -14,6 +14,7 @@ defmodule Imagemanagerprototype.Accounts do
       "can_delete_users",
       "can_add_new_fields",
       "can_modify_fields",
+      "can_view_high_res_image",
       "can_comment"
       ]
   end
