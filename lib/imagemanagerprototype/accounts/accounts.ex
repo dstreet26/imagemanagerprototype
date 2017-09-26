@@ -353,4 +353,118 @@ defmodule Imagemanagerprototype.Accounts do
   def change_user_type(%UserType{} = user_type) do
     UserType.changeset(user_type, %{})
   end
+
+  alias Imagemanagerprototype.Accounts.AccessKey
+
+  @doc """
+  Returns the list of access_keys.
+
+  ## Examples
+
+      iex> list_access_keys()
+      [%AccessKey{}, ...]
+
+  """
+  def list_access_keys do
+    Repo.all(AccessKey)
+    |> Repo.preload(:user_type)
+  end
+
+  @doc """
+  Gets a single access_key.
+
+  Raises `Ecto.NoResultsError` if the Access key does not exist.
+
+  ## Examples
+
+      iex> get_access_key!(123)
+      %AccessKey{}
+
+      iex> get_access_key!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_access_key!(id), do: Repo.get!(AccessKey, id) |> Repo.preload(:user_type)
+
+# def check_access_key!(access_key) do
+#   query = from ak in AccessKey,
+#     where: ak.access_key == ^access_key,
+#     select: {
+#       ak.id, 
+#       ak.access_key, 
+#       ak.user_type_id 
+#     }
+    
+
+#       Repo.one(query)
+# end
+def check_access_key!(access_key) do
+  Repo.get_by(AccessKey, access_key: access_key)
+end
+
+  @doc """
+  Creates a access_key.
+
+  ## Examples
+
+      iex> create_access_key(%{field: value})
+      {:ok, %AccessKey{}}
+
+      iex> create_access_key(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_access_key(attrs \\ %{}, user_type_id) do
+    %AccessKey{}
+    |> AccessKey.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_type_id, user_type_id)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a access_key.
+
+  ## Examples
+
+      iex> update_access_key(access_key, %{field: new_value})
+      {:ok, %AccessKey{}}
+
+      iex> update_access_key(access_key, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_access_key(%AccessKey{} = access_key, attrs) do
+    access_key
+    |> AccessKey.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a AccessKey.
+
+  ## Examples
+
+      iex> delete_access_key(access_key)
+      {:ok, %AccessKey{}}
+
+      iex> delete_access_key(access_key)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_access_key(%AccessKey{} = access_key) do
+    Repo.delete(access_key)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking access_key changes.
+
+  ## Examples
+
+      iex> change_access_key(access_key)
+      %Ecto.Changeset{source: %AccessKey{}}
+
+  """
+  def change_access_key(%AccessKey{} = access_key) do
+    AccessKey.changeset(access_key, %{})
+  end
 end

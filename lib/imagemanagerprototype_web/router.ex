@@ -44,6 +44,7 @@ defmodule ImagemanagerprototypeWeb.Router do
     get "/docs", PageController, :docs
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+     resources "/access_keys", AccessKeyController, only: [:new, :create, :show, :index, :delete]
     resources "/user_types", UserTypeController
     # resources "/licenses", LicenseController
      # resources "/projects", ProjectController

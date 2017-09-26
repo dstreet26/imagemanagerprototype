@@ -7,6 +7,7 @@ defmodule Imagemanagerprototype.Accounts.User do
   schema "users" do
     field :name, :string
     field :username, :string
+    field :access_key, :string, virtual: true
     has_one :credential, Credential
     belongs_to :user_type, UserType
 
@@ -16,7 +17,7 @@ defmodule Imagemanagerprototype.Accounts.User do
   @doc false
   def changeset(%User{} = user, attrs) do
     user
-    |> cast(attrs, [:name, :username])
+    |> cast(attrs, [:name, :username, :access_key])
     |> validate_required([:name, :username])
   end
 end

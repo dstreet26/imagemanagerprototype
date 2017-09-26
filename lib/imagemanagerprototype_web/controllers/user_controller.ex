@@ -16,16 +16,29 @@ defmodule ImagemanagerprototypeWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-  user_types = Accounts.list_user_types()
-  {user_type_id, _ } = user_params["type"] |> Integer.parse
+  access_key = user_params["access_key"]
+  # Check if access key is in database
 
-    case Accounts.create_user(user_params, user_type_id) do
-      {:ok, user} ->
-        conn
-        |> put_flash(:info, "User created successfully.")
-        |> redirect(to: user_path(conn, :show, user))
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset, user_types: user_types)
+  database_key = Accounts.check_access_key!(access_key)
+  
+  case database_key do
+     nil ->
+      conn
+      |> put_flash(:error, "Access Key not found.")
+      |> redirect(to: user_path(conn, :index))
+      # changeset = Accounts.change_user(%User{})
+      # render(conn, "new.html", changeset: changeset)
+    _ ->
+      user_type_id  = database_key.user_type_id
+      case Accounts.create_user(user_params, user_type_id) do
+        {:ok, user} ->
+          Accounts.delete_access_key(database_key)
+          conn
+          |> put_flash(:info, "User created successfully.")
+          |> redirect(to: user_path(conn, :show, user))
+        {:error, %Ecto.Changeset{} = changeset} ->
+          render(conn, "new.html", changeset: changeset)
+      end
     end
   end
 
@@ -35,10 +48,9 @@ defmodule ImagemanagerprototypeWeb.UserController do
   end
 
   def edit(conn, %{"id" => id}) do
-    user_types = Accounts.list_user_types()
     user = Accounts.get_user!(id)
     changeset = Accounts.change_user(user)
-    render(conn, "edit.html", user: user, changeset: changeset,user_types: user_types)
+    render(conn, "edit.html", user: user, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do

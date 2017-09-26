@@ -1,0 +1,17 @@
+<h2>Show Access key</h2>
+
+<ul>
+
+  <li>
+    <strong>Access key:</strong>
+    <%= @access_key.access_key %>
+  </li>
+  <li>
+    <strong>Good for:</strong>
+    <%= @access_key.user_type.type %>
+  </li>
+
+</ul>
+
+
+<span><%= link "Back", to: access_key_path(@conn, :index) %></span>

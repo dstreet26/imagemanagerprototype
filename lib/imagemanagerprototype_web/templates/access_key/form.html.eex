@@ -1,0 +1,20 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+   <%= inputs_for f, :user_type, fn utf -> %>
+     <%= label utf, :type, class: "control-label" %>
+   <%= select f, :type, @user_types|> Enum.map(&{&1.type, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :type %>
+   <% end %>
+   </div>
+
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

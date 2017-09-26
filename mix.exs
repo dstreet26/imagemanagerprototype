@@ -44,6 +44,7 @@ defmodule Imagemanagerprototype.Mixfile do
       {:pbkdf2_elixir, "~> 0.12"},
       {:arc, "~> 0.8.0"},
       {:arc_ecto, "~> 0.7.0"},
+      {:uuid, "~> 1.1"},
       {:cowboy, "~> 1.0"}
     ]
   end
