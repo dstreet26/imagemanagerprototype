@@ -36,6 +36,9 @@
 
 <img src="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}, :thumb) %>" alt="">
 <br>
+<a href="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}) %>">Download high-res version</a>
+<br>
+
 
 <h2>Comments:</h2>
 
