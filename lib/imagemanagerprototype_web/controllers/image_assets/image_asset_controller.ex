@@ -11,8 +11,16 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   end
 
   def new(conn, _params) do
+    authors = ImageAssets.list_authors()
+    locations = ImageAssets.list_locations()
+    licenses = ImageAssets.list_licenses()
     changeset = ImageAssets.change_image_asset(%ImageAsset{})
-    render(conn, "new.html", changeset: changeset)
+    render(conn, "new.html",
+      changeset: changeset, 
+      authors: authors,
+      locations: locations,
+      licenses: licenses
+      )
   end
 
   def create(conn, %{"image_asset" => image_asset_params}) do
@@ -46,8 +54,15 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
 
   def edit(conn, %{"id" => id}) do
     image_asset = ImageAssets.get_image_asset!(id)
+    authors = ImageAssets.list_authors()
+    locations = ImageAssets.list_locations()
+    licenses = ImageAssets.list_licenses()
     changeset = ImageAssets.change_image_asset(image_asset)
-    render(conn, "edit.html", image_asset: image_asset, changeset: changeset)
+    render(conn, "edit.html", image_asset: image_asset, changeset: changeset,
+     authors: authors,
+     locations: locations,
+     licenses: licenses
+     )
   end
 
   def update(conn, %{"id" => id, "image_asset" => image_asset_params}) do

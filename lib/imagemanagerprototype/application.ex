@@ -12,6 +12,7 @@ defmodule Imagemanagerprototype.Application do
       supervisor(Imagemanagerprototype.Repo, []),
       # Start the endpoint when the application starts
       supervisor(ImagemanagerprototypeWeb.Endpoint, []),
+       supervisor(ImagemanagerprototypeWeb.Presence, [])
       # Start your own worker by calling: Imagemanagerprototype.Worker.start_link(arg1, arg2, arg3)
       # worker(Imagemanagerprototype.Worker, [arg1, arg2, arg3]),
     ]

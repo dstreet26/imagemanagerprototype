@@ -10,7 +10,11 @@
     <title>SI Image Manager Prototype</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
-
+  <script>
+      window.userToken = "<%= assigns[:user_token] %>"
+      console.log('userToken',window.userToken)
+    </script>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   <body>
     <div class="container">
       <div class="row">
@@ -34,6 +38,8 @@
       </main>
 
     </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+  
+       
+
   </body>
 </html>

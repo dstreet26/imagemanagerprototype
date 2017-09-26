@@ -39,27 +39,26 @@
 
 <h2>Comments:</h2>
 
+<div id="comments">
 
-
-<%= for comment <- @image_asset_comments do %>
-    
-   <div class="comment">
-    <p>
-    Posted by: <%= elem(comment,2) %>
-    </p>
-    <p>
-    Inserted at: <%= elem(comment,1) %>
-    </p>
-    <p>
-    Comment: <%= elem(comment,0) %>
-    </p>
-  
+  <%= for comment <- @image_asset_comments do %>
+      
+     <div class="comment">
+      <p>
+        Posted by: <%= elem(comment,2) %>
+      </p>
+      <p>
+        Inserted at: <%= elem(comment,1) %>
+      </p>
+      <p>
+        Comment: <%= elem(comment,0) %>
+      </p>
+    </div>
+      
+  <% end  %>
 
 
 </div>
-    
-<% end  %>
-
 
 <%= form_for @conn, image_assets_comment_path(@conn, :create), [name: :comment], fn f -> %>
   <%= text_input f, :comment,  class: "form-control" %>
@@ -74,7 +73,7 @@
   let myId = <%= @image_asset.id %>
   console.log('myId',myId)
 console.log(socket)
-
+var commentList = document.getElementById('comments');
 if (window.userToken.length > 0) {
   socket.connect()
 
@@ -82,5 +81,24 @@ if (window.userToken.length > 0) {
   channel.join()
   .receive('ok', resp => { console.log('Joined successfully', resp) })
   .receive('error', resp => { console.log('Unable to join', resp) })
+  channel.on("change", comment => {
+  console.log("Change:", comment);
+
+  let newComment = document.createElement('div')
+  newComment.innerHTML = `
+ <p>
+        Posted by: ${comment.user_name}
+      </p>
+      <p>
+        Inserted at: ${comment.inserted_at}
+      </p>
+      <p>
+        Comment: ${comment.comment}
+      </p>
+  `
+
+  commentList.appendChild(newComment)
+
+})
 }
 </script>

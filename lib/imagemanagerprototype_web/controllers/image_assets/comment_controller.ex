@@ -11,6 +11,7 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.CommentController do
    image_asset = ImageAssets.get_image_asset!(image_asset_id)
     case ImageAssets.create_comment(comment_params,current_user_id,image_asset_id) do
       {:ok, comment} ->
+        ImagemanagerprototypeWeb.ImageAssetChannel.broadcast_change(comment_params,current_user_id,image_asset_id)
         conn
         |> put_flash(:info, "Comment Posted.")
         |> redirect(to: image_assets_image_asset_path(conn, :show, image_asset))

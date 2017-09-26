@@ -1,12 +1,46 @@
 defmodule ImagemanagerprototypeWeb.RoomChannel do
   use ImagemanagerprototypeWeb, :channel
+  alias ImagemanagerprototypeWeb.Presence
 
-  def join("room:lobby", payload, socket) do
-    if authorized?(payload) do
-      {:ok, socket}
-    else
-      {:error, %{reason: "unauthorized"}}
-    end
+  # def join("room:lobby", payload, socket) do
+  #   if authorized?(payload) do
+  #     {:ok, socket}
+  #   else
+  #     {:error, %{reason: "unauthorized"}}
+  #   end
+  # end
+
+
+  def join("room:lobby", params, socket) do
+    # IO.puts "PARAMS"
+    # IO.inspect params
+
+    # IO.puts "SOCKET"
+    # IO.inspect socket
+
+
+    send(self(), :after_join)
+
+    # {:ok, assign(socket, :user_id)}
+    {:ok, socket}
+    # {:ok, assign(socket, :user_id)}
+    # {:ok, assign(socket, :user_id, params["user_id"])}
+  end
+
+  # def handle_info(:after_join, socket) do
+  #   push socket, "presence_state", Presence.list(socket)
+  #   {:ok, _} = Presence.track(socket, socket.assigns.user_id, %{
+  #     online_at: inspect(System.system_time(:seconds))
+  #   })
+  #   {:noreply, socket}
+  # end
+
+  def handle_info(:after_join, socket) do
+    Presence.track(socket, socket.assigns.user_id, %{
+      online_at: :os.system_time(:milli_seconds)
+    })
+    push socket, "presence_state", Presence.list(socket)
+    {:noreply, socket}
   end
 
   # Channels can be used in a request/response fashion
@@ -27,3 +61,6 @@ defmodule ImagemanagerprototypeWeb.RoomChannel do
     true
   end
 end
+
+
+

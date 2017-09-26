@@ -30,11 +30,36 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :filename, class: "control-label" %>
+    <%= label f, :Image, class: "control-label" %>
     <%= file_input f, :filename, class: "form-control" %>
     <%= error_tag f, :filename %>
   </div>
 
+  <div class="form-group">
+   <%= inputs_for f, :author, fn af -> %>
+     <%= label af, :author, class: "control-label" %>
+   <%= select f, :name, @authors|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag af, :name %>
+   <% end %>
+ </div>
+
+
+ <div class="form-group">
+   <%= inputs_for f, :license, fn licf -> %>
+     <%= label licf, :license, class: "control-label" %>
+   <%= select f, :name, @licenses|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag licf, :name %>
+   <% end %>
+ </div>
+
+
+  <div class="form-group">
+   <%= inputs_for f, :location, fn locf -> %>
+     <%= label locf, :name, class: "control-label" %>
+   <%= select f, :name, @locations|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag locf, :name %>
+   <% end %>
+ </div>
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

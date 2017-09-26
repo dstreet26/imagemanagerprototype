@@ -2,7 +2,7 @@ defmodule Imagemanagerprototype.ImageAssets.ImageAsset do
   use Ecto.Schema
   use Arc.Ecto.Schema
   import Ecto.Changeset
-    alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,License,Author,Comment}
+    alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,License,Author,Comment,Location}
     # alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,Comment}
 
 

@@ -2,7 +2,8 @@ defmodule ImagemanagerprototypeWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", ImagemanagerprototypeWeb.RoomChannel
+  channel "room:*", ImagemanagerprototypeWeb.RoomChannel
+  channel "image_asset:*", ImagemanagerprototypeWeb.ImageAssetChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -19,8 +20,37 @@ defmodule ImagemanagerprototypeWeb.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
-  def connect(_params, socket) do
-    {:ok, socket}
+  # TODO: If there's no token, I just send a socket connection with no user_id. I would rather deny the socket connection but it led to errors everywhere
+  # def connect(params, socket) do
+  #   # IO.puts "----------SOCKET CONNECTED----------"
+  #   # IO.puts "PARAMS"
+  #   # IO.inspect params
+  #   case params["token"] do
+  #      nil -> {:ok, socket}
+  #      "" -> {:ok, socket}
+  #      _ -> 
+  #       case Phoenix.Token.verify(socket, "user socket", params["token"], max_age: 1209600) do
+  #         {:ok, user_id} ->
+  #           # IO.puts "USER_ID"
+  #           # IO.inspect user_id
+  #           {:ok, assign(socket, :user_id, user_id)}
+  #         {:ok, user_id} ->
+  #           :error
+  #       end
+        
+  #   end
+    
+  # end
+
+
+  def connect(%{"token" => token}, socket) do
+    case Phoenix.Token.verify(socket, "user socket", token, max_age: 1209600) do
+      {:ok, user_id} ->
+        {:ok, assign(socket, :user_id, user_id)}
+      {:error, reason} ->
+        # {:ok, socket}
+        :error
+    end
   end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
