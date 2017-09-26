@@ -2,8 +2,8 @@ defmodule Imagemanagerprototype.ImageAssets.ImageAsset do
   use Ecto.Schema
   use Arc.Ecto.Schema
   import Ecto.Changeset
-    # alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,License,Author,Comment}
-    alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,Comment}
+    alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,License,Author,Comment}
+    # alias Imagemanagerprototype.ImageAssets.{ImageAsset,Project,Comment}
 
 
   schema "image_assets" do
@@ -14,9 +14,15 @@ defmodule Imagemanagerprototype.ImageAssets.ImageAsset do
     field :notes, :string
     # field :project_id, :id
     belongs_to :project, Project
-    field :license_id, :id
-    field :author_id, :id
-    field :location_id, :id
+    # field :license_id, :id
+    # has_one :license, License
+    belongs_to :license, License
+    # field :author_id, :id
+    # has_one :author, Author
+    belongs_to :author, Author
+    # field :location_id, :id
+    # has_one :location, Location
+    belongs_to :location, Location
     has_many :comments, Comment
 
     timestamps()

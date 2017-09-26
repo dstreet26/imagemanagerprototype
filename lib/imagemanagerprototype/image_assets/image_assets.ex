@@ -4,10 +4,18 @@ defmodule Imagemanagerprototype.ImageAssets do
   """
 
   import Ecto.Query, warn: false
-  alias Imagemanagerprototype.Repo
-
-  alias Imagemanagerprototype.ImageAssets.Project
-
+  
+alias Imagemanagerprototype.Repo
+alias Imagemanagerprototype.ImageAssets.Project
+# alias Imagemanagerprototype.Accounts.{User, Credential,UserType}
+alias Imagemanagerprototype.ImageAssets.License
+alias Imagemanagerprototype.ImageAssets.Author
+alias Imagemanagerprototype.ImageAssets.Location
+alias Imagemanagerprototype.ImageAssets.ImageAsset
+alias Imagemanagerprototype.ImageAssets.Comment
+alias Imagemanagerprototype.Accounts.User
+  
+  
   @doc """
   Returns the list of projects.
 
@@ -102,7 +110,7 @@ defmodule Imagemanagerprototype.ImageAssets do
     Project.changeset(project, %{})
   end
 
-  alias Imagemanagerprototype.ImageAssets.License
+  
 
   @doc """
   Returns the list of licenses.
@@ -198,7 +206,7 @@ defmodule Imagemanagerprototype.ImageAssets do
     License.changeset(license, %{})
   end
 
-  alias Imagemanagerprototype.ImageAssets.Author
+  
 
   @doc """
   Returns the list of authors.
@@ -294,7 +302,7 @@ defmodule Imagemanagerprototype.ImageAssets do
     Author.changeset(author, %{})
   end
 
-  alias Imagemanagerprototype.ImageAssets.Location
+  
 
   @doc """
   Returns the list of locations.
@@ -390,7 +398,7 @@ defmodule Imagemanagerprototype.ImageAssets do
     Location.changeset(location, %{})
   end
 
-  alias Imagemanagerprototype.ImageAssets.ImageAsset
+  
 
   @doc """
   Returns the list of image_assets.
@@ -419,7 +427,33 @@ defmodule Imagemanagerprototype.ImageAssets do
       ** (Ecto.NoResultsError)
 
   """
-  def get_image_asset!(id), do: Repo.get!(ImageAsset, id)
+  # def get_image_asset!(id), do: Repo.get!(ImageAsset, id)
+  def get_image_asset!(id) do
+    Repo.get!(ImageAsset, id) 
+    |> Repo.preload(:comments)
+    |> Repo.preload(:author)
+    |> Repo.preload(:location)
+    |> Repo.preload(:license)
+
+  end
+
+
+def get_image_asset_comments!(id) do
+  query = from ia in ImageAsset,
+    where: ia.id == ^id,
+    join: c in Comment, where: c.image_asset_id == ia.id,
+    join: u in User, where: c.user_id == u.id,
+    order_by: [asc: c.inserted_at],
+    select: {
+      c.comment, 
+      c.inserted_at,
+      u.name
+    }
+    
+
+      Repo.all(query)
+  end
+
 
   @doc """
   Creates a image_asset.
@@ -486,7 +520,7 @@ defmodule Imagemanagerprototype.ImageAssets do
     ImageAsset.changeset(image_asset, %{})
   end
 
-  alias Imagemanagerprototype.ImageAssets.Comment
+  
 
   @doc """
   Returns the list of comments.
@@ -515,7 +549,10 @@ defmodule Imagemanagerprototype.ImageAssets do
       ** (Ecto.NoResultsError)
 
   """
-  def get_comment!(id), do: Repo.get!(Comment, id)
+  def get_comment!(id) do
+     Repo.get!(Comment, id)
+     |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a comment.
@@ -529,11 +566,25 @@ defmodule Imagemanagerprototype.ImageAssets do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_comment(attrs \\ %{}) do
+  def create_comment(attrs \\ %{}, current_user_id, image_asset_id) do
     %Comment{}
     |> Comment.changeset(attrs)
+    |> Ecto.Changeset.put_change(:user_id, current_user_id)
+    |> Ecto.Changeset.put_change(:image_asset_id, image_asset_id)
     |> Repo.insert()
   end
+
+
+
+
+ # def create_user(attrs \\ %{}, user_type_id) do
+ #    %User{}
+ #    |> User.changeset(attrs)
+ #    |> Ecto.Changeset.cast_assoc(:credential, with: &Credential.changeset/2)
+ #    |> Ecto.Changeset.put_change(:user_type_id, user_type_id)
+ #    |> Repo.insert()
+ #  end
+  
 
   @doc """
   Updates a comment.

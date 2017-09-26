@@ -3,6 +3,7 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
 
   alias Imagemanagerprototype.ImageAssets
   alias Imagemanagerprototype.ImageAssets.ImageAsset
+  alias Imagemanagerprototype.ImageAssets.Comment
 
   def index(conn, _params) do
     image_assets = ImageAssets.list_image_assets()
@@ -15,9 +16,6 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   end
 
   def create(conn, %{"image_asset" => image_asset_params}) do
-    IO.puts "---------IMAGE_ASSET_PARAMS"
-    IO.inspect image_asset_params
-    mychangeset = Image
     case ImageAssets.create_image_asset(image_asset_params) do
       {:ok, image_asset} ->
         conn
@@ -28,17 +26,22 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
     end
   end
 
+
   def show(conn, %{"id" => id}) do
+    comment_changeset = ImageAssets.change_comment(%Comment{})
+    current_user_id = conn.assigns.current_user.credential.id
+
     image_asset = ImageAssets.get_image_asset!(id)
-    IO.puts "SHOW"
-    IO.inspect image_asset
-
- test = Imagemanagerprototype.ArcFilename.url({image_asset.filename,image_asset})
-    IO.puts "TEST"
-    IO.inspect test
 
 
-    render(conn, "show.html", image_asset: image_asset)
+    {image_asset_id_integer, _ } = id |> Integer.parse
+    image_asset_comments = ImageAssets.get_image_asset_comments!(image_asset_id_integer)
+
+    render(conn, "show.html", 
+      image_asset: image_asset, 
+      comment_changeset: comment_changeset, 
+      current_user_id: current_user_id,
+      image_asset_comments: image_asset_comments)
   end
 
   def edit(conn, %{"id" => id}) do

@@ -1,5 +1,8 @@
 <h2>Show Image asset</h2>
 
+<span><%= link "Edit", to: image_assets_image_asset_path(@conn, :edit, @image_asset) %></span>
+<span><%= link "Back", to: image_assets_image_asset_path(@conn, :index) %></span>
+
 <ul>
 
   <li>
@@ -32,7 +35,52 @@
 </ul>
 
 <img src="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}, :thumb) %>" alt="">
+<br>
+
+<h2>Comments:</h2>
 
 
-<span><%= link "Edit", to: image_assets_image_asset_path(@conn, :edit, @image_asset) %></span>
-<span><%= link "Back", to: image_assets_image_asset_path(@conn, :index) %></span>
+
+<%= for comment <- @image_asset_comments do %>
+    
+   <div class="comment">
+    <p>
+    Posted by: <%= elem(comment,2) %>
+    </p>
+    <p>
+    Inserted at: <%= elem(comment,1) %>
+    </p>
+    <p>
+    Comment: <%= elem(comment,0) %>
+    </p>
+  
+
+
+</div>
+    
+<% end  %>
+
+
+<%= form_for @conn, image_assets_comment_path(@conn, :create), [name: :comment], fn f -> %>
+  <%= text_input f, :comment,  class: "form-control" %>
+  <%= hidden_input f, :image_asset_id, value: @image_asset.id %>
+  <%= hidden_input f, :current_user_id, value: @current_user_id %>
+  <%= submit "Add Comment", class: "btn btn-primary" %>
+<% end %>
+
+<%# render "form.html", Map.put(assigns, :action, image_assets_image_asset_path(@conn, :create)) %>
+
+<script>
+  let myId = <%= @image_asset.id %>
+  console.log('myId',myId)
+console.log(socket)
+
+if (window.userToken.length > 0) {
+  socket.connect()
+
+  let channel = socket.channel(`image_asset:${myId}`, {})
+  channel.join()
+  .receive('ok', resp => { console.log('Joined successfully', resp) })
+  .receive('error', resp => { console.log('Unable to join', resp) })
+}
+</script>
