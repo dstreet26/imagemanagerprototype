@@ -17,12 +17,14 @@ defmodule Imagemanagerprototype.ArcFilename do
     {:convert, "-strip -thumbnail 250x250^ -gravity center -extent 250x250 -format png", :png}
   end
 
-  # def acl(:thumb, _), do: :public_read
+  def acl(:thumb, _), do: :public_read
 
   def __storage, do: Arc.Storage.Local
 
 
-
+  def default_url(version,scope) do
+    "https://placehold.it/100x100"
+  end
 
   # Override the persisted filenames:
   # def filename(version, _) do
