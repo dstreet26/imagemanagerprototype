@@ -10,6 +10,11 @@
     <title>SI Image Manager Prototype</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     
+    <style>
+      .navbar {
+        margin-bottom: 0px;
+      }
+    </style>
     
   </head>
   <script>
@@ -32,15 +37,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav pull-right">
+            <li>
+               <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Toggle Menu</a>
+            </li>
                <li>
                 <a href="<%= page_path(@conn,:docs) %>">Docs</a>
               </li>
-              <li>
-                    <a href="<%= image_assets_project_path(@conn,:index) %>">Projects</a>
-                  </li>
-                  <li>
-                    <a href="<%= image_assets_image_asset_path(@conn,:index) %>">ImageAssets</a>
-                  </li>
+              
 
                   <li>
                     <%= if @conn.assigns.user_info.name == "" do %> 
@@ -57,18 +60,78 @@
     </nav>
 
 
-    <div class="container-fluid">
-      
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+   <div id="wrapper" class="toggled">
 
-    </div> <!-- /container -->
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <%# <li class="sidebar-brand">
+                    <a href="#">
+                        Start Bootstrap
+                    </a>
+                </li> %>
+                <li>
+                  <%= link "Projects", to: image_assets_project_path(@conn, :index) %>
+                </li>
+                <li>
+                  <%= link "ImageAssets", to: image_assets_image_asset_path(@conn, :index) %>
+                    
+                </li>
+                <li>
+                  <%= link "Locations", to: image_assets_location_path(@conn, :index) %>
+                </li>
+                <li>
+                  <%= link "Licenses", to: image_assets_license_path(@conn, :index) %>
+                </li>
+                <li>
+                  <%= link "Users", to: user_path(@conn, :index) %>
+                </li>
+                <li>
+                  <%= link "UserTypes", to: user_type_path(@conn, :index) %>
+                </li>
+                <li>
+                  <%= link "AccessKeys", to: access_key_path(@conn, :index) %>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+
+
+        
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+               <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
+                 <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+
+                <main role="main">
+                  <%= render @view_module, @view_template, assigns %>
+                </main>
+    
+               
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+
+
+
+
+
   
        
 
   </body>
+    <!-- Menu Toggle Script -->
+    <script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+    </script>
 </html>
