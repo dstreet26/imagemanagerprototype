@@ -1,5 +1,5 @@
 <div class="jumbotron">
-  <h2>Welcome to the prototype. Login to get started.</h2>
+  <h2>Welcome to the prototype! <a href="<%= session_path(@conn,:new) %>">Login</a> or <a href="<%= user_path(@conn,:new) %>">Register</a> to get started.</h2>
 </div>
 
 
