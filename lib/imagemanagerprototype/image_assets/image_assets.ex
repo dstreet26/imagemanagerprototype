@@ -14,7 +14,9 @@ alias Imagemanagerprototype.ImageAssets.Location
 alias Imagemanagerprototype.ImageAssets.ImageAsset
 alias Imagemanagerprototype.ImageAssets.Comment
 alias Imagemanagerprototype.Accounts.User
-  
+
+
+
   
   @doc """
   Returns the list of projects.
@@ -80,6 +82,8 @@ alias Imagemanagerprototype.Accounts.User
     |> Project.changeset(attrs)
     |> Repo.update()
   end
+
+
 
   @doc """
   Deletes a Project.
@@ -413,6 +417,33 @@ alias Imagemanagerprototype.Accounts.User
     Repo.all(ImageAsset)
   end
 
+   def get_image_asset_by_project(project_id) do
+    query = from ia in ImageAsset,
+      where: ia.project_id == ^project_id
+      
+
+    # Repo.all(ImageAsset, :project_id, project_id)
+    Repo.all(query)
+  end
+
+# alias Imagemanagerprototype.QueryFilter
+# def filter_image_assets(params) do
+#    image_assets = 
+#      ImageAsset
+#       |> QueryFilter.filter(%ImageAsset{author_id: nil}, params, [:project_id])
+#       |> Repo.all
+#   end
+
+  def update_image_asset(%ImageAsset{} = image_asset, attrs,project_id,license_id,author_id,location_id ) do
+    image_asset
+    |> ImageAsset.changeset(attrs)
+    |> Ecto.Changeset.put_change(:project_id, project_id)
+    |> Ecto.Changeset.put_change(:license_id, license_id)
+    |> Ecto.Changeset.put_change(:author_id, author_id)
+    |> Ecto.Changeset.put_change(:location_id, location_id)
+    |> Repo.update()
+  end
+
   @doc """
   Gets a single image_asset.
 
@@ -437,6 +468,8 @@ alias Imagemanagerprototype.Accounts.User
     |> Repo.preload(:license)
 
   end
+
+ 
 
 
 def get_image_asset_comments!(id) do

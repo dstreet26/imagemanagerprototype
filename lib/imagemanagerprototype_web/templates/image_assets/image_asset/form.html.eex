@@ -38,7 +38,7 @@
 
   <div class="form-group">
    <%= inputs_for f, :project, fn utf -> %>
-     <%= label utf, :proj, class: "control-label" %>
+     <%= label utf, :project, class: "control-label" %>
    <%= select utf, :proj, @projects|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
      <%= error_tag utf, :proj %>
    <% end %>
@@ -47,7 +47,7 @@
 
  <div class="form-group">
    <%= inputs_for f, :author, fn utf -> %>
-     <%= label utf, :auth, class: "control-label" %>
+     <%= label utf, :author, class: "control-label" %>
    <%= select utf, :auth, @authors|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
      <%= error_tag utf, :auth %>
    <% end %>
@@ -56,7 +56,7 @@
 
  <div class="form-group">
    <%= inputs_for f, :license, fn utf -> %>
-     <%= label utf, :lic, class: "control-label" %>
+     <%= label utf, :license, class: "control-label" %>
    <%= select utf, :lic, @licenses|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
      <%= error_tag utf, :lic %>
    <% end %>
@@ -67,7 +67,7 @@
 
  <div class="form-group">
    <%= inputs_for f, :location, fn utf -> %>
-     <%= label utf, :loc, class: "control-label" %>
+     <%= label utf, :location, class: "control-label" %>
    <%= select utf, :loc, @locations|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
      <%= error_tag utf, :loc %>
    <% end %>

@@ -4,10 +4,66 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   alias Imagemanagerprototype.ImageAssets
   alias Imagemanagerprototype.ImageAssets.ImageAsset
   alias Imagemanagerprototype.ImageAssets.Comment
+  
 
-  def index(conn, _params) do
-    image_assets = ImageAssets.list_image_assets()
-    render(conn, "index.html", image_assets: image_assets)
+  use Params
+
+  defparams image_asset_search %{
+    project_id: :id,
+    author_id: :id,
+    location_id: :id,
+    license_id: :id
+    
+  }
+
+
+
+  def index(conn, params) do
+
+
+
+      projects = ImageAssets.list_projects()
+      # IO.puts "====================list_projects============="
+      # IO.inspect projects
+
+      case projects do
+        [] ->
+          render(conn, "empty.html")
+        _ ->
+          changeset = image_asset_search(params)
+          IO.inspect changeset
+          if changeset.valid? do
+
+      # project_id = ImageAssets.get_image_asset_by_author(changeset.changes.project_id)
+      case Map.has_key?(changeset.changes, :project_id) do
+         false ->
+          IO.puts "==========1============"
+          render(conn, "index.html", image_assets: ImageAssets.list_image_assets())
+        true -> 
+          IO.puts "==========2============"
+          render(conn, "index.html", image_assets: ImageAssets.get_image_asset_by_project(
+             changeset.changes.project_id
+              ))
+      end
+      
+          end
+          
+      end
+
+       
+
+  end
+
+# def index2(conn, params) do
+#   ImageAssets.params_filter()
+
+#   render(conn, "index.html", posts: posts)
+# end  
+
+
+  def empty(conn, _params) do
+    # image_assets = ImageAssets.list_image_assets()
+    render(conn, "empty.html")
   end
 
   def new(conn, _params) do

@@ -1,0 +1,7 @@
+<div class="container">
+<h2>No projects yet. Add a <a href="<%= image_assets_project_path(@conn,:index) %>">Project</a></h2>
+
+
+</div>
+
+

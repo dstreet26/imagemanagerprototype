@@ -45,6 +45,7 @@ defmodule Imagemanagerprototype.Mixfile do
       {:arc, "~> 0.8.0"},
       {:arc_ecto, "~> 0.7.0"},
       {:uuid, "~> 1.1"},
+      {:params, "~> 2.0"},
       {:cowboy, "~> 1.0"}
     ]
   end
