@@ -8,6 +8,7 @@ defmodule ImagemanagerprototypeWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :put_user_token
+    plug :put_user_info
   end
 
 
@@ -19,6 +20,22 @@ defmodule ImagemanagerprototypeWeb.Router do
          conn
        end
      end
+
+  defp put_user_info(conn, _) do
+    case get_session(conn, :user_id) do
+      nil ->
+        assign(conn, :user_info, %Imagemanagerprototype.Accounts.User{
+          id: -1,
+          name: "",
+          user_type: %Imagemanagerprototype.Accounts.UserType {
+            type: ""
+          }
+          })
+        
+      user_id ->
+        assign(conn, :user_info, Imagemanagerprototype.Accounts.get_user!(user_id))
+      end
+    end
 
   pipeline :api do
     plug :accepts, ["json"]
