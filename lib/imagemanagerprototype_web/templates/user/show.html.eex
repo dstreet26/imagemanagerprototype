@@ -1,3 +1,4 @@
+<div class="container">
 <h2>Show User</h2>
 
 <ul>
@@ -24,5 +25,18 @@
 
 </ul>
 
-<span><%= link "Edit", to: user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: user_path(@conn, :index) %></span>
+<%= if @conn.assigns.user_info.id == @user.id do %> 
+  <span>
+    <%= link "Edit", to: user_path(@conn, :edit, @user) %>
+  </span>
+  
+  <%= form_for @conn, session_path(@conn, :delete), [method: :delete, as: :user], fn _ -> %>
+    <div class="form-group">
+      <%= submit "Log Out", class: "btn btn-default" %>
+    </div>
+  <% end %>
+
+  <% else %>
+<% end %>
+
+</div>
