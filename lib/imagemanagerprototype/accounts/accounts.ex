@@ -140,7 +140,10 @@ defmodule Imagemanagerprototype.Accounts do
 
   """
   def delete_user(%User{} = user) do
-    Repo.delete(user)
+    # Repo.delete(user)
+    # Repo.update(user, %{is_active: false} )
+    user = Ecto.Changeset.change user, is_active: false
+    Repo.update(user)
   end
 
   @doc """
