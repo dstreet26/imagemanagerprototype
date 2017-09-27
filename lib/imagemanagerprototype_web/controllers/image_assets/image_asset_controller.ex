@@ -95,13 +95,17 @@ IO.inspect conn.assigns.current_user.user_type.actions
       image_asset_comments: image_asset_comments)
   end
 
+
+ 
   def edit(conn, %{"id" => id}) do
     image_asset = ImageAssets.get_image_asset!(id)
+    projects = ImageAssets.list_projects()
     authors = ImageAssets.list_authors()
     locations = ImageAssets.list_locations()
     licenses = ImageAssets.list_licenses()
     changeset = ImageAssets.change_image_asset(image_asset)
     render(conn, "edit.html", image_asset: image_asset, changeset: changeset,
+     projects: projects,
      authors: authors,
      locations: locations,
      licenses: licenses
