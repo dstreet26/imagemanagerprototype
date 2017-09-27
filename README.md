@@ -1,20 +1,21 @@
-# Imagemanagerprototype
+# Image Asset Manager Prototype
 
-To start your Phoenix server:
+Note: requires postgres and imagemagick and a C compiler
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `cd assets && npm install`
-  * Start Phoenix endpoint with `mix phx.server`
+# Installing and Running
+
+## Clone the repo
+`git clone https://github.com/dstreet26/imagemanagerprototype`
+`cd imagemanagerprototype`
+
+## Get dependencies
+
+`mix deps.get`
+`mix ecto.create`
+`mix ecto.migrate`
+`cd assets && npm install`
+
+ Start it with `mix phx.server` from the root directory
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
-
-## Learn more
-
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: https://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
