@@ -30,36 +30,49 @@
   </div>
 
   <div class="form-group">
-    <%= label f, :Image, class: "control-label" %>
+    <%= label f, :image, class: "control-label" %>
     <%= file_input f, :filename, class: "form-control" %>
     <%= error_tag f, :filename %>
   </div>
 
+
   <div class="form-group">
-   <%= inputs_for f, :author, fn af -> %>
-     <%= label af, :author, class: "control-label" %>
-   <%= select f, :name, @authors|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
-     <%= error_tag af, :name %>
+   <%= inputs_for f, :project, fn utf -> %>
+     <%= label utf, :proj, class: "control-label" %>
+   <%= select utf, :proj, @projects|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :proj %>
    <% end %>
- </div>
+   </div>
 
 
  <div class="form-group">
-   <%= inputs_for f, :license, fn licf -> %>
-     <%= label licf, :license, class: "control-label" %>
-   <%= select f, :name, @licenses|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
-     <%= error_tag licf, :name %>
+   <%= inputs_for f, :author, fn utf -> %>
+     <%= label utf, :auth, class: "control-label" %>
+   <%= select utf, :auth, @authors|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :auth %>
    <% end %>
- </div>
+   </div>
 
 
-  <div class="form-group">
-   <%= inputs_for f, :location, fn locf -> %>
-     <%= label locf, :name, class: "control-label" %>
-   <%= select f, :name, @locations|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
-     <%= error_tag locf, :name %>
+ <div class="form-group">
+   <%= inputs_for f, :license, fn utf -> %>
+     <%= label utf, :lic, class: "control-label" %>
+   <%= select utf, :lic, @licenses|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :lic %>
    <% end %>
- </div>
+   </div>
+
+ 
+
+
+ <div class="form-group">
+   <%= inputs_for f, :location, fn utf -> %>
+     <%= label utf, :loc, class: "control-label" %>
+   <%= select utf, :loc, @locations|> Enum.map(&{&1.name, &1.id}) ,class: "form-control" %>
+     <%= error_tag utf, :loc %>
+   <% end %>
+   </div>
+
 
   <div class="form-group">
     <%= submit "Submit", class: "btn btn-primary" %>

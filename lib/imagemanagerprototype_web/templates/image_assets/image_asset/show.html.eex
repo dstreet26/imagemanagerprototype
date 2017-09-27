@@ -24,9 +24,23 @@
     <%= @image_asset.caption %>
   </li>
 
+<li>
+    <strong>Project:</strong>
+    <%= @image_asset.project.name %>
+  </li>
+
   <li>
     <strong>Author:</strong>
-    <%= @image_asset.author %>
+    <%= @image_asset.author.name %>
+  </li>
+
+  <li>
+    <strong>Location:</strong>
+    <%= @image_asset.location.name %>
+  </li>
+  <li>
+    <strong>License:</strong>
+    <%= @image_asset.license.name %>
   </li>
 
   <li>

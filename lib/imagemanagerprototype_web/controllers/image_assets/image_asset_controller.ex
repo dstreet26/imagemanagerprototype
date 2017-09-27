@@ -11,12 +11,14 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   end
 
   def new(conn, _params) do
+    projects = ImageAssets.list_projects()
     authors = ImageAssets.list_authors()
     locations = ImageAssets.list_locations()
     licenses = ImageAssets.list_licenses()
     changeset = ImageAssets.change_image_asset(%ImageAsset{})
     render(conn, "new.html",
       changeset: changeset, 
+      projects: projects,
       authors: authors,
       locations: locations,
       licenses: licenses
@@ -24,8 +26,35 @@ defmodule ImagemanagerprototypeWeb.ImageAssets.ImageAssetController do
   end
 
   def create(conn, %{"image_asset" => image_asset_params}) do
+# {project_id, _ } = image_asset_params["project"] |> Integer.parse
+# {license_id, _ } = image_asset_params["license"] |> Integer.parse
+# {author_id, _ } = image_asset_params["author"] |> Integer.parse
+# {location_id, _ } = image_asset_params["location"] |> Integer.parse
 
-    case ImageAssets.create_image_asset(image_asset_params) do
+# IO.puts ""
+# IO.inspect image_asset_params["project"]["proj"]
+# IO.puts ""
+# IO.inspect image_asset_params["license"]["lic"]
+# IO.puts ""
+# IO.inspect image_asset_params["author"]["auth"]
+# IO.puts ""
+# IO.inspect image_asset_params["location"]["loc"]
+
+
+
+{project_id, _ } = image_asset_params["project"]["proj"] |> Integer.parse
+{license_id, _ } = image_asset_params["license"]["lic"] |> Integer.parse
+{author_id, _ } = image_asset_params["author"]["auth"] |> Integer.parse
+{location_id, _ } =  image_asset_params["location"]["loc"] |> Integer.parse
+
+
+
+
+
+# IO.puts "---------------image_asset_params----------------"
+# IO.inspect image_asset_params
+    # case ImageAssets.create_image_asset(image_asset_params) do
+    case ImageAssets.create_image_asset(image_asset_params,project_id,license_id,author_id,location_id) do
       {:ok, image_asset} ->
         conn
         |> put_flash(:info, "Image asset created successfully.")
@@ -82,7 +111,22 @@ IO.inspect conn.assigns.current_user.user_type.actions
   def update(conn, %{"id" => id, "image_asset" => image_asset_params}) do
     image_asset = ImageAssets.get_image_asset!(id)
 
-    case ImageAssets.update_image_asset(image_asset, image_asset_params) do
+    # {project_id, _ } = image_asset_params["project"] |> Integer.parse
+# {license_id, _ } = image_asset_params["license"] |> Integer.parse
+# {author_id, _ } = image_asset_params["author"] |> Integer.parse
+# {location_id, _ } = image_asset_params["location"] |> Integer.parse
+
+
+{project_id, _ } = image_asset_params["project"]["proj"] |> Integer.parse
+{license_id, _ } = image_asset_params["license"]["lic"] |> Integer.parse
+{author_id, _ } = image_asset_params["author"]["auth"] |> Integer.parse
+{location_id, _ } =  image_asset_params["location"]["loc"] |> Integer.parse
+
+
+
+
+    # case ImageAssets.update_image_asset(image_asset, image_asset_params) do
+    case ImageAssets.update_image_asset(image_asset, image_asset_params,project_id,license_id,author_id,location_id) do
       {:ok, image_asset} ->
         conn
         |> put_flash(:info, "Image asset updated successfully.")

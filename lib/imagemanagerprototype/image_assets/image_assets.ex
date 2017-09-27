@@ -431,6 +431,7 @@ alias Imagemanagerprototype.Accounts.User
   def get_image_asset!(id) do
     Repo.get!(ImageAsset, id) 
     |> Repo.preload(:comments)
+    |> Repo.preload(:project)
     |> Repo.preload(:author)
     |> Repo.preload(:location)
     |> Repo.preload(:license)
@@ -467,11 +468,21 @@ def get_image_asset_comments!(id) do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_image_asset(attrs \\ %{}) do
+  def create_image_asset(attrs \\ %{},project_id,license_id,author_id,location_id ) do
     %ImageAsset{}
     |> ImageAsset.changeset(attrs)
+    |> Ecto.Changeset.put_change(:project_id, project_id)
+    |> Ecto.Changeset.put_change(:license_id, license_id)
+    |> Ecto.Changeset.put_change(:author_id, author_id)
+    |> Ecto.Changeset.put_change(:location_id, location_id)
     |> Repo.insert()
   end
+
+  #   def create_image_asset(attrs \\ %{} ) do
+  #   %ImageAsset{}
+  #   |> ImageAsset.changeset(attrs)
+  #   |> Repo.insert()
+  # end
 
   @doc """
   Updates a image_asset.
@@ -485,9 +496,20 @@ def get_image_asset_comments!(id) do
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_image_asset(%ImageAsset{} = image_asset, attrs) do
+
+# def update_image_asset(%ImageAsset{} = image_asset, attrs,) do
+#     image_asset
+#     |> ImageAsset.changeset(attrs)
+#     |> Repo.update()
+#   end
+
+  def update_image_asset(%ImageAsset{} = image_asset, attrs,project_id,license_id,author_id,location_id ) do
     image_asset
     |> ImageAsset.changeset(attrs)
+    |> Ecto.Changeset.put_change(:project_id, project_id)
+    |> Ecto.Changeset.put_change(:license_id, license_id)
+    |> Ecto.Changeset.put_change(:author_id, author_id)
+    |> Ecto.Changeset.put_change(:location_id, location_id)
     |> Repo.update()
   end
 
