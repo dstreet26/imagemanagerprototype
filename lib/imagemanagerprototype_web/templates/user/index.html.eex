@@ -5,6 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Username</th>
+      <th>Is Active</th>
       <th>Email</th>
       <th>Type</th>
 
@@ -16,6 +17,7 @@
     <tr>
       <td><%= user.name %></td>
       <td><%= user.username %></td>
+      <td><%= user.is_active %></td>
       <td><%= user.credential.email %></td>
       <td>
 
