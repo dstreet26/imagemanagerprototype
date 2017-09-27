@@ -1,5 +1,7 @@
+<div class="container">
 <h2>New Project</h2>
 
 <%= render "form.html", Map.put(assigns, :action, image_assets_project_path(@conn, :create)) %>
 
 <span><%= link "Back", to: image_assets_project_path(@conn, :index) %></span>
+</div>

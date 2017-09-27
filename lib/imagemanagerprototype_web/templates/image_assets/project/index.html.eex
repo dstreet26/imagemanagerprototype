@@ -1,3 +1,4 @@
+<div class="container">
 <h2>Listing Projects</h2>
 
 <table class="table">
@@ -26,3 +27,4 @@
 </table>
 
 <span><%= link "New Project", to: image_assets_project_path(@conn, :new) %></span>
+</div>

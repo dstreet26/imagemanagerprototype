@@ -1,3 +1,4 @@
+<div class="container">
 <h2>Listing Image assets</h2>
 
 <table class="table">
@@ -38,6 +39,8 @@ end
 </table>
 
 <span><%= link "New Image asset", to: image_assets_image_asset_path(@conn, :new) %></span>
+</div>
+
 
 
 <script>

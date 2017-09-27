@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Sign-in</h1>
 
 <%= form_for @conn, session_path(@conn, :create), [method: :post, as: :user], fn f -> %>
@@ -30,3 +31,4 @@
 	</div>
 
 <% end %>
+</div>

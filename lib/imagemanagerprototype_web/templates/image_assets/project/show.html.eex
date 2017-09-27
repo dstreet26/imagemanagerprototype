@@ -1,3 +1,4 @@
+<div class="container">
 <h2>Show Project</h2>
 
 <ul>
@@ -16,3 +17,4 @@
 
 <span><%= link "Edit", to: image_assets_project_path(@conn, :edit, @project) %></span>
 <span><%= link "Back", to: image_assets_project_path(@conn, :index) %></span>
+</div>
