@@ -9,6 +9,8 @@
 
     <title>SI Image Manager Prototype</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    
+    
   </head>
   <script>
       window.userToken = "<%= assigns[:user_token] %>"
@@ -16,20 +18,47 @@
     </script>
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   <body>
-    <div class="container">
-      <div class="row">
-          <div class="col-md-6">
-              <h1>SI Image Manager Prototype</h1>
-          </div>
-          <div class="col-md-6"></div>
-          <nav role="navigation">
-              <ul class="nav nav-pills pull-right">
-                  <li><a href="docs">Docs</a></li>
-                  <li><a href="imageassets">ImageAssets</a></li>
-                  <li><a href="/sessions/new">Login</a></li>
-              </ul>
-          </nav>
+
+<nav class="navbar navbar-default navbar-static-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="<%= page_path(@conn,:index) %>">SI Image Manager Prototype</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav pull-right">
+               <li>
+                <a href="<%= page_path(@conn,:docs) %>">Docs</a>
+              </li>
+              <li>
+                    <a href="<%= image_assets_project_path(@conn,:index) %>">Projects</a>
+                  </li>
+                  <li>
+                    <a href="<%= image_assets_image_asset_path(@conn,:index) %>">ImageAssets</a>
+                  </li>
+
+                  <li>
+                    <%= if @conn.assigns.user_info.name == "" do %> 
+                          <a href="<%= session_path(@conn,:new) %>">Login</a>
+                    <% else %>
+                      <a href="<%= user_path(@conn, :show, @conn.assigns.user_info) %>" ><%= @conn.assigns.user_info.name %> | <%= @conn.assigns.user_info.user_type.type %></a>
+                    <% end %>
+
+                  </li>
+              
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
+    </nav>
+
+
+    <div class="container-fluid">
+      
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
