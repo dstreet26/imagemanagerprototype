@@ -20,7 +20,11 @@
 
 
 <div>
-<span><%= link "View this projects ImageAssets", to: image_assets_image_asset_path(@conn, :index) %></span>
+
+ <span>
+<a href="<%= image_assets_image_asset_path(@conn, :index) %>/?project_id=<%= @project.id%>">
+	View this projects ImageAssets
+</a>
 </div>
 
 
