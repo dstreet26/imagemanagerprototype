@@ -1,17 +1,16 @@
-<h2>Show Image asset</h2>
-
 <span><%= link "Edit", to: image_assets_image_asset_path(@conn, :edit, @image_asset) %></span>
 <span><%= link "Back", to: image_assets_image_asset_path(@conn, :index) %></span>
 
+<h2><%= @image_asset.name%> --  <%= @image_asset.caption%></h2>
+
+<div class="row">
+  <div class="col-md-6">
 <ul>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @image_asset.name %>
-  </li>
+  
 
   <li>
-    <strong>Imageid:</strong>
+    <strong>LocationCode:</strong>
     <%= @image_asset.imageid %>
   </li>
 
@@ -26,6 +25,11 @@
   </li>
 
   <li>
+    <strong>Author:</strong>
+    <%= @image_asset.author %>
+  </li>
+
+  <li>
     <strong>Filename:</strong>
     <%= case @image_asset.filename do
       nil -> ""
@@ -35,7 +39,8 @@
 
 
 
-</ul>
+</ul>    
+
 
 <img src="<%= Imagemanagerprototype.ArcFilename.url({@image_asset.filename,@image_asset}, :thumb) %>" alt="">
 <br>
@@ -45,8 +50,12 @@
   
 <% end %>
 <%# only show if allowed %>
+  </div>
+  <div class="col-md-6">
+    
+  
 
-<br>
+
 
 
 <h2>Comments:</h2>
@@ -81,6 +90,8 @@
 
 <%# render "form.html", Map.put(assigns, :action, image_assets_image_asset_path(@conn, :create)) %>
 
+</div>
+</div>
 <script>
   let myId = <%= @image_asset.id %>
   console.log('myId',myId)
